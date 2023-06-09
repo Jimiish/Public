@@ -1,0 +1,895 @@
+Sub ChemistryValidationScript()
+'
+' ChemistryValidationScript Macro
+'
+' Keyboard Shortcut: Ctrl+Shift+Y
+
+'## This marco is designed to insert the 5 rows needed to calculate the AVE, SD, RSD, and %REC for the sample sets
+
+'## Select 5 blank rows and insert them into report at row "61"
+
+
+Application.DisplayAlerts = False
+
+    ActiveWindow.SmallScroll Down:=30
+    Rows("100:104").Select
+    Selection.Copy
+    Rows("43:43").Select
+    Selection.Insert Shift:=xlDown
+    
+'## Write the titles for calculations for the first chemical at "B62", "B63", "B64", "B65", and "C62".
+    
+    Range("B44").Select
+    Application.CutCopyMode = False
+    ActiveCell.FormulaR1C1 = "AVE"
+    Range("B45").Select
+    ActiveCell.FormulaR1C1 = "SD"
+    Range("B46").Select
+    ActiveCell.FormulaR1C1 = "%RSD"
+    Range("B47").Select
+    ActiveCell.FormulaR1C1 = "%REC"
+    
+'## Write the formulas for calculations for the first chemical at "B62", "B63", "B64", "B65", and "C62".
+    
+    Range("C44").Select
+    Application.CutCopyMode = False
+    ActiveCell.FormulaR1C1 = "=AVERAGE(R[-14]C:R[-2]C)"
+    Range("C45").Select
+    ActiveCell.FormulaR1C1 = "=STDEV(R[-15]C:R[-3]C)"
+    Range("C46").Select
+    ActiveCell.FormulaR1C1 = "=R[-1]C/R[-2]C * 100"
+    Range("C47").Select
+    ActiveCell.FormulaR1C1 = "=R[-3]C/5 * 100"
+    Range("D44").Select
+    ActiveCell.FormulaR1C1 = "=AVERAGE(R[-14]C:R[-2]C)"
+    
+'## Copy and paste the fomulas into all elements
+
+    Range("B44:D47").Select
+    Selection.Copy
+    Range("E44").Select
+    ActiveSheet.Paste
+    Range("H44").Select
+    ActiveSheet.Paste
+    Range("K44").Select
+    ActiveSheet.Paste
+    Range("N44").Select
+    ActiveSheet.Paste
+    Range("Q44").Select
+    ActiveSheet.Paste
+    Range("T44").Select
+    ActiveSheet.Paste
+    Range("W44").Select
+    ActiveSheet.Paste
+    Range("Z44").Select
+    ActiveSheet.Paste
+    Range("AC44").Select
+    ActiveSheet.Paste
+    Range("AF44").Select
+    ActiveSheet.Paste
+    Range("AI44").Select
+    ActiveSheet.Paste
+    Range("AL44").Select
+    ActiveSheet.Paste
+    
+'## Conditionally Format Cells First one is %Recovery
+    Range("C47,F47,I47,L47,O47,R47,U47,X47,AA47,AD47,AG47,AJ47,AM47").Select
+    Range("AM47").Activate
+    
+    Selection.FormatConditions.Add Type:=xlCellValue, Operator:=xlLess, _
+        Formula1:="=95"
+    Selection.FormatConditions(Selection.FormatConditions.Count).SetFirstPriority
+    With Selection.FormatConditions(1).Interior
+        .PatternColorIndex = xlAutomatic
+        .Color = 255
+        .TintAndShade = 0
+    End With
+    Selection.FormatConditions(1).StopIfTrue = False
+    Selection.FormatConditions.Add Type:=xlCellValue, Operator:=xlGreater, _
+        Formula1:="=105"
+    Selection.FormatConditions(Selection.FormatConditions.Count).SetFirstPriority
+    With Selection.FormatConditions(1).Interior
+        .PatternColorIndex = xlAutomatic
+        .Color = 255
+        .TintAndShade = 0
+    End With
+    Selection.FormatConditions(1).StopIfTrue = False
+    
+    
+    Range("C46,F46,I46,L46,O46,R46,U46,X46,AA46,AD46,AG46,AJ46,AM46").Select
+    Range("AM46").Activate
+  
+        Selection.FormatConditions.Add Type:=xlCellValue, Operator:=xlGreater, _
+        Formula1:="=5"
+    Selection.FormatConditions(Selection.FormatConditions.Count).SetFirstPriority
+    With Selection.FormatConditions(1).Interior
+        .PatternColorIndex = xlAutomatic
+        .Color = 255
+        .TintAndShade = 0
+    End With
+    Selection.FormatConditions(1).StopIfTrue = False
+    
+'## Image 1 Create Title
+'## Image 1
+    Range("A90").Select
+    ActiveCell.FormulaR1C1 = "IMAGE"
+    Selection.Font.Bold = True
+    Range("A91").Select
+    ActiveCell.FormulaR1C1 = "=R[-19]C"
+    Range("D95").Select
+    ActiveCell.FormulaR1C1 = "INSERT IMAGE HERE"
+
+'## Create a thick border for the pasted image and merge & center the cells
+'## Image 1
+    Range("B92:I113").Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    Selection.Borders(xlInsideVertical).LineStyle = xlNone
+    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+
+'## Center the text in the cell, it will be overwritten.
+'## Image 1
+    Range("B92:I113").Select
+    Selection.Merge
+    With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+    End With
+
+'## Image 2 Create Title
+'## Image 2
+    Range("A115").Select
+    ActiveCell.FormulaR1C1 = "IMAGE"
+    Selection.Font.Bold = True
+    Range("A116").Select
+    ActiveCell.FormulaR1C1 = "=R[-43]C"
+    Range("D120").Select
+    ActiveCell.FormulaR1C1 = "INSERT IMAGE HERE"
+
+'## Create a thick border for the pasted image and merge & center the cells
+'## Image 2
+        Range("B117:I138").Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    Selection.Borders(xlInsideVertical).LineStyle = xlNone
+    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+
+'## Center the text in the cell, it will be overwritten.
+'## Image 2
+    Range("B117:I138").Select
+    Selection.Merge
+    With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+    End With
+
+'## Image 3 Create Title
+'## Image 3
+    Range("A140").Select
+    ActiveCell.FormulaR1C1 = "IMAGE"
+    Selection.Font.Bold = True
+    Range("A141").Select
+    ActiveCell.FormulaR1C1 = "=R[-67]C"
+    Range("D145").Select
+    ActiveCell.FormulaR1C1 = "INSERT IMAGE HERE"
+
+'## Create a thick border for the pasted image and merge & center the cells
+'## Image 3
+    Range("B142:I163").Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    Selection.Borders(xlInsideVertical).LineStyle = xlNone
+    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+
+'## Center the text in the cell, it will be overwritten.
+'## Image 3
+    Range("B142:I163").Select
+    Selection.Merge
+    With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+    End With
+
+'## Image 4 Create Title
+'## Image 4
+    Range("A165").Select
+    ActiveCell.FormulaR1C1 = "IMAGE"
+    Selection.Font.Bold = True
+    Range("A166").Select
+    ActiveCell.FormulaR1C1 = "=R[-91]C"
+    Range("D170").Select
+    ActiveCell.FormulaR1C1 = "INSERT IMAGE HERE"
+
+'## Create a thick border for the pasted image and merge & center the cells
+'## Image 4
+    Range("B167:I188").Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    Selection.Borders(xlInsideVertical).LineStyle = xlNone
+    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+
+'## Center the text in the cell, it will be overwritten.
+'## Image 4
+    Range("B167:I188").Select
+    Selection.Merge
+    With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+    End With
+
+'## Image 5 Create Title
+'## Image 5
+    Range("A190").Select
+    ActiveCell.FormulaR1C1 = "IMAGE"
+    Selection.Font.Bold = True
+    Range("A191").Select
+    ActiveCell.FormulaR1C1 = "=R[-115]C"
+    Range("D195").Select
+    ActiveCell.FormulaR1C1 = "INSERT IMAGE HERE"
+
+'## Create a thick border for the pasted image and merge & center the cells
+'## Image 5
+    Range("B192:I213").Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    Selection.Borders(xlInsideVertical).LineStyle = xlNone
+    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+
+'## Center the text in the cell, it will be overwritten.
+'## Image 5
+    Range("B192:I213").Select
+    Selection.Merge
+    With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+    End With
+
+'## Image 6 Create Title
+'## Image 6
+    Range("A215").Select
+    ActiveCell.FormulaR1C1 = "IMAGE"
+    Selection.Font.Bold = True
+    Range("A216").Select
+    ActiveCell.FormulaR1C1 = "=R[-139]C"
+    Range("D220").Select
+    ActiveCell.FormulaR1C1 = "INSERT IMAGE HERE"
+
+'## Create a thick border for the pasted image and merge & center the cells
+'## Image 6
+    Range("B217:I238").Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    Selection.Borders(xlInsideVertical).LineStyle = xlNone
+    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+
+'## Center the text in the cell, it will be overwritten.
+'## Image 6
+    Range("B217:I238").Select
+    Selection.Merge
+    With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+    End With
+
+'## Image 7 Create Title
+'## Image 7
+    Range("A240").Select
+    ActiveCell.FormulaR1C1 = "IMAGE"
+    Selection.Font.Bold = True
+    Range("A241").Select
+    ActiveCell.FormulaR1C1 = "=R[-163]C"
+    Range("D245").Select
+    ActiveCell.FormulaR1C1 = "INSERT IMAGE HERE"
+
+'## Create a thick border for the pasted image and merge & center the cells
+'## Image 7
+    Range("B242:I263").Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    Selection.Borders(xlInsideVertical).LineStyle = xlNone
+    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+
+'## Center the text in the cell, it will be overwritten.
+'## Image 7
+    Range("B242:I263").Select
+    Selection.Merge
+    With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+    End With
+
+'## Image 8 Create Title
+'## Image 8
+    Range("A265").Select
+    ActiveCell.FormulaR1C1 = "IMAGE"
+    Selection.Font.Bold = True
+    Range("A266").Select
+    ActiveCell.FormulaR1C1 = "=R[-187]C"
+    Range("D270").Select
+    ActiveCell.FormulaR1C1 = "INSERT IMAGE HERE"
+
+'## Create a thick border for the pasted image and merge & center the cells
+'## Image 8
+    Range("B267:I288").Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    Selection.Borders(xlInsideVertical).LineStyle = xlNone
+    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+
+'## Center the text in the cell, it will be overwritten.
+'## Image 8
+    Range("B267:I288").Select
+    Selection.Merge
+    With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+    End With
+
+'## Image 9 Create Title
+'## Image 9
+    Range("A290").Select
+    ActiveCell.FormulaR1C1 = "IMAGE"
+    Selection.Font.Bold = True
+    Range("A291").Select
+    ActiveCell.FormulaR1C1 = "=R[-211]C"
+    Range("D295").Select
+    ActiveCell.FormulaR1C1 = "INSERT IMAGE HERE"
+
+'## Create a thick border for the pasted image and merge & center the cells
+'## Image 9
+    Range("B292:I313").Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    Selection.Borders(xlInsideVertical).LineStyle = xlNone
+    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+
+'## Center the text in the cell, it will be overwritten.
+'## Image 9
+    Range("B292:I313").Select
+    Selection.Merge
+    With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+    End With
+
+'## Image 10 Create Title
+'## Image 10
+    Range("A315").Select
+    ActiveCell.FormulaR1C1 = "IMAGE"
+    Selection.Font.Bold = True
+    Range("A316").Select
+    ActiveCell.FormulaR1C1 = "=R[-235]C"
+    Range("D320").Select
+    ActiveCell.FormulaR1C1 = "INSERT IMAGE HERE"
+
+'## Create a thick border for the pasted image and merge & center the cells
+'## Image 10
+    Range("B317:I338").Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    Selection.Borders(xlInsideVertical).LineStyle = xlNone
+    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+
+'## Center the text in the cell, it will be overwritten.
+'## Image 10
+    Range("B317:I338").Select
+    Selection.Merge
+    With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+    End With
+
+'## Image 11 Create Title
+'## Image 11
+    Range("A340").Select
+    ActiveCell.FormulaR1C1 = "IMAGE"
+    Selection.Font.Bold = True
+    Range("A341").Select
+    ActiveCell.FormulaR1C1 = "=R[-259]C"
+    Range("D345").Select
+    ActiveCell.FormulaR1C1 = "INSERT IMAGE HERE"
+
+'## Create a thick border for the pasted image and merge & center the cells
+'## Image 11
+    Range("B342:I363").Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    Selection.Borders(xlInsideVertical).LineStyle = xlNone
+    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+
+'## Center the text in the cell, it will be overwritten.
+'## Image 11
+    Range("B342:I363").Select
+    Selection.Merge
+    With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+    End With
+
+'## Image 12 Create Title
+'## Image 12
+    Range("A365").Select
+    ActiveCell.FormulaR1C1 = "IMAGE"
+    Selection.Font.Bold = True
+    Range("A366").Select
+    ActiveCell.FormulaR1C1 = "=R[-283]C"
+    Range("D370").Select
+    ActiveCell.FormulaR1C1 = "INSERT IMAGE HERE"
+
+'## Create a thick border for the pasted image and merge & center the cells
+'## Image 12
+    Range("B367:I388").Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    Selection.Borders(xlInsideVertical).LineStyle = xlNone
+    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+
+'## Center the text in the cell, it will be overwritten.
+'## Image 12
+    Range("B392:I413").Select
+    Selection.Merge
+    With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+    End With
+
+'## Image 13 Create Title
+'## Image 13
+    Range("A390").Select
+    ActiveCell.FormulaR1C1 = "IMAGE"
+    Selection.Font.Bold = True
+    Range("A391").Select
+    ActiveCell.FormulaR1C1 = "=R[-307]C"
+    Range("D395").Select
+    ActiveCell.FormulaR1C1 = "INSERT IMAGE HERE"
+
+'## Create a thick border for the pasted image and merge & center the cells
+'## Image 13
+    Range("B392:I413").Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    Selection.Borders(xlInsideVertical).LineStyle = xlNone
+    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+
+'## Center the text in the cell, it will be overwritten.
+'## Image 13
+    Range("B392:I413").Select
+    Selection.Merge
+    With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+    End With
+
+
+'## Attach Images of peak shape to report
+
+'## Image 1
+    Range("B92:I113").Select
+    ActiveSheet.Pictures.Insert( _
+        "C:\Users\JamesIshihara\OneDrive - RADOM Corporation\Desktop\Chemistry Validation Images & Script\Images\image1.png" _
+        ).Select
+
+'## Image 2
+    Range("B117:I138").Select
+    ActiveSheet.Pictures.Insert( _
+        "C:\Users\JamesIshihara\OneDrive - RADOM Corporation\Desktop\Chemistry Validation Images & Script\Images\image2.png" _
+        ).Select
+
+'## Image 3
+    Range("B142:I163").Select
+    ActiveSheet.Pictures.Insert( _
+        "C:\Users\JamesIshihara\OneDrive - RADOM Corporation\Desktop\Chemistry Validation Images & Script\Images\image3.png" _
+        ).Select
+        
+'## Image 4
+    Range("B167:I188").Select
+    ActiveSheet.Pictures.Insert( _
+        "C:\Users\JamesIshihara\OneDrive - RADOM Corporation\Desktop\Chemistry Validation Images & Script\Images\image4.png" _
+        ).Select
+
+'## Image 5
+    Range("B192:I213").Select
+    ActiveSheet.Pictures.Insert( _
+        "C:\Users\JamesIshihara\OneDrive - RADOM Corporation\Desktop\Chemistry Validation Images & Script\Images\image5.png" _
+        ).Select
+
+'## Image 6
+    Range("B217:I238").Select
+    ActiveSheet.Pictures.Insert( _
+        "C:\Users\JamesIshihara\OneDrive - RADOM Corporation\Desktop\Chemistry Validation Images & Script\Images\image6.png" _
+        ).Select
+
+'## Image 7
+    Range("B242:I263").Select
+    ActiveSheet.Pictures.Insert( _
+        "C:\Users\JamesIshihara\OneDrive - RADOM Corporation\Desktop\Chemistry Validation Images & Script\Images\image7.png" _
+        ).Select
+
+'## Image 8
+    Range("B267:I288").Select
+    ActiveSheet.Pictures.Insert( _
+        "C:\Users\JamesIshihara\OneDrive - RADOM Corporation\Desktop\Chemistry Validation Images & Script\Images\image8.png" _
+        ).Select
+
+'## Image 9
+    Range("B292:I313").Select
+    ActiveSheet.Pictures.Insert( _
+        "C:\Users\JamesIshihara\OneDrive - RADOM Corporation\Desktop\Chemistry Validation Images & Script\Images\image9.png" _
+        ).Select
+        
+'## Image 10
+    Range("B317:B338").Select
+    ActiveSheet.Pictures.Insert( _
+        "C:\Users\JamesIshihara\OneDrive - RADOM Corporation\Desktop\Chemistry Validation Images & Script\Images\image10.png" _
+        ).Select
+
+'## Image 11
+    Range("B342:I363").Select
+    ActiveSheet.Pictures.Insert( _
+        "C:\Users\JamesIshihara\OneDrive - RADOM Corporation\Desktop\Chemistry Validation Images & Script\Images\image11.png" _
+        ).Select
+
+'## Image 12
+    Range("B367:I388").Select
+    ActiveSheet.Pictures.Insert( _
+        "C:\Users\JamesIshihara\OneDrive - RADOM Corporation\Desktop\Chemistry Validation Images & Script\Images\image12.png" _
+        ).Select
+        
+'## Image 13
+    Range("B392:I413").Select
+    ActiveSheet.Pictures.Insert( _
+        "C:\Users\JamesIshihara\OneDrive - RADOM Corporation\Desktop\Chemistry Validation Images & Script\Images\image13.png" _
+        ).Select
+
+'   embed images
+    
+    Dim ws As Worksheet
+    Dim img As Shape
+
+    ' Set the worksheet where the images are located
+    Set ws = Sheets("TestScript")
+    
+    ' Loop through each image in the worksheet
+    For Each img In ws.Shapes
+        ' Get the cell location of the image
+    Dim imgCell As Range
+    Set imgCell = img.TopLeftCell
+    
+    Selection.ShapeRange.LockAspectRatio = msoFalse
+With Selection.ShapeRange
+    .Width = Range("B392:I413").Width
+    .Height = Range("B392:I413").Height
+    .Top = Range("B392:I413").Top
+    .Left = Range("B392:I413").Left
+End With
+    
+' Modify properties of the image
+    img.Top = imgCell.Top
+    img.Left = imgCell.Left
+    img.Width = imgCell.Width
+    img.Height = imgCell.Height
+
+' Copy and paste the image as a picture in the cell
+'    img.CopyPicture Appearance:=xlScreen, Format:=xlPicture
+'    imgCell.Select
+'    ws.Paste
+
+Application.CutCopyMode = False
+    
+    Next img
+
+Range("A44").Select
+
+End Sub
